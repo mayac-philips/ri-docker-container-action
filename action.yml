@@ -54,6 +54,11 @@ runs:
       shell: powershell
     - name: Run
       if: runner.os == 'Windows'
+    - name: docker_login
+      id: docker_login
+      run: >-
+        echo {{ input.docker_secret }} | docker login {{ input.repository }} -u $username --password-stdin 
+      if: runner.os == 'Windows'
       run: >-
         docker run ${{ steps.settings.outputs.extra_args }}
         --rm 
